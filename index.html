@@ -234,16 +234,28 @@ function generate(){
 
   // FOLLOW-UP
   const names = attendees ? attendees.split(/,| and /)[0].split('(')[0].trim() : "everyone";
-  document.getElementById('followBlock').textContent =
-    "Subject: " + (title ? title : "Meeting") + " — recap & next steps\n\n" +
-    "Hi " + names + ",\n\n" +
-    "Thanks for the time today. Quick recap:\n\n" +
-    "• Discussed: " + (title || "[meeting topic]") + "\n" +
-    "• Decided: [decision 1], [decision 2]\n" +
-    (goal ? "• Toward our goal — " + goal + ": [status]\n" : "") +
-    "• Next steps: [action] — [owner] — [date]\n\n" +
-    "Flag anything I've missed. Otherwise, talk " + (type === "client" || type === "pitch" ? "soon" : "next week") + "!\n\n" +
-    "[Your name]";
+  let follow;
+  if (type === "interview") {
+    follow = "Subject: Thank you — " + (title || "the [role] interview") + "\n\n" +
+      "Hi " + (names !== "everyone" ? names : "[interviewer name]") + ",\n\n" +
+      "Thank you for taking the time to meet with me today. " +
+      "I enjoyed our conversation about " + (title || "the role") + " — especially [specific moment you discussed].\n\n" +
+      "It reinforced how well my experience with [your key strength] fits what your team is building. " +
+      "I'd love the chance to contribute.\n\n" +
+      "Please let me know if you need anything else from me. I look forward to hearing about next steps.\n\n" +
+      "Best regards,\n[Your name]\n[Phone] — [Email] — [LinkedIn]";
+  } else {
+    follow = "Subject: " + (title ? title : "Meeting") + " — recap & next steps\n\n" +
+      "Hi " + names + ",\n\n" +
+      "Thanks for the time today. Quick recap:\n\n" +
+      "• Discussed: " + (title || "[meeting topic]") + "\n" +
+      "• Decided: [decision 1], [decision 2]\n" +
+      (goal ? "• Toward our goal — " + goal + ": [status]\n" : "") +
+      "• Next steps: [action] — [owner] — [date]\n\n" +
+      "Flag anything I've missed. Otherwise, talk " + (type === "client" || type === "pitch" ? "soon" : "next week") + "!\n\n" +
+      "[Your name]";
+  }
+  document.getElementById('followBlock').textContent = follow;
 
   document.getElementById('inputPanel').style.display = "none";
   document.getElementById('result').style.display = "block";
